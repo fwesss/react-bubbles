@@ -109,7 +109,6 @@ const ColorList = ({ colors, updateColors }) => {
       )}
       <AddColor setColors={updateColors} />
       <div className="spacer" />
-      <AddColor setColors={updateColors} />
     </div>
   );
 };

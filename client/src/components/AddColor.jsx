@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { FormControl, FormLabel, Input, Button } from '@chakra-ui/core';
+import {
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  Heading,
+} from '@chakra-ui/core';
 import axiosWithAuth from '../api/axiosWithAuth';
 
 const initialColorState = {
@@ -37,6 +43,7 @@ const AddColor = ({ setColors }) => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <Heading>Add a Color</Heading>
       <FormControl isRequired>
         <FormLabel htmlFor="color-name">Color Name</FormLabel>
         <Input
