@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
+import axiosWithAuth from '../api/axiosWithAuth';
 
 const initialColor = {
   color: '',
   code: { hex: '' },
 };
 
-const ColorList = ({ colors }) => {
-  console.log(colors);
+const ColorList = ({ colors, updateColors }) => {
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
 
@@ -20,10 +20,20 @@ const ColorList = ({ colors }) => {
     // Make a put request to save your updated color
     // think about where will you get the id from...
     // where is is saved right now?
+    axiosWithAuth()
+      .put(`/api/colors/${colorToEdit.id}`, colorToEdit)
+      .then((response) => console.log(response.data))
+      .catch((error) => console.log(error));
   };
 
-  const deleteColor = () => {
+  const deleteColor = ({ id }) => {
     // make a delete request to delete this color
+    axiosWithAuth()
+      .delete(`/api/colors/${id}`)
+      .then((response) => {
+        updateColors(colors.filter((color) => color.id !== response.data));
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -38,9 +48,8 @@ const ColorList = ({ colors }) => {
             onKeyPress={() => editColor(color)}
           >
             <span>
+              {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
               <span
-                role="button"
-                tabIndex={0}
                 className="delete"
                 onClick={(e) => {
                   e.stopPropagation();
